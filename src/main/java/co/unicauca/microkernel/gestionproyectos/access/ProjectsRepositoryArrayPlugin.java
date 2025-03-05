@@ -2,6 +2,7 @@ package co.unicauca.microkernel.gestionproyectos.access;
 
 import co.unicauca.microkernel.gestionproyectos.core.plugin.manager.IProjectRepositoryPlugin;
 import co.unicauca.microkernel.gestionproyectos.core.domain.entities.Project;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,8 +14,10 @@ import java.util.List;
  */
 public class ProjectsRepositoryArrayPlugin implements IProjectRepositoryPlugin {
 
-    // To be implemented the array
-  
+    private List<Project> proyectos = new ArrayList<>();
+
+    public ProjectsRepositoryArrayPlugin() {
+    }
 
     /**
      * Agrega un nuevo proyecto a la lista de proyectos.
@@ -23,7 +26,7 @@ public class ProjectsRepositoryArrayPlugin implements IProjectRepositoryPlugin {
      */
     @Override
     public void addProject(Project proyecto) {
-        // To be implemented
+        proyectos.add(proyecto);
     }
 
     /**
@@ -33,8 +36,7 @@ public class ProjectsRepositoryArrayPlugin implements IProjectRepositoryPlugin {
      */
     @Override
     public List<Project> getProjects() {
-        // To be implemented
-        return null;
+        return proyectos;
     }
 
     /**
@@ -45,7 +47,11 @@ public class ProjectsRepositoryArrayPlugin implements IProjectRepositoryPlugin {
      */
     @Override
     public Project findProjectByTitle(String titulo) {
-            // To be implemented
-            return null;
+        for (Project proyecto : proyectos) {
+            if (proyecto.getTitle().equals(titulo)) {
+                return proyecto; // Se encontró la persona
+            }
+        }
+        return null; // No se encontró
     }
 }

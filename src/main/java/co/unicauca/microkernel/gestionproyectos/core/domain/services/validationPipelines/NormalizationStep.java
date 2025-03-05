@@ -17,7 +17,7 @@ public class NormalizationStep implements PipelineStep {
      */
     @Override
     public Project process(Project proyecto) {
-        // To be implemented
-        return null;
+        proyecto.setTitulo(proyecto.getTitle().toUpperCase());
+        return proyecto;
     }
 }

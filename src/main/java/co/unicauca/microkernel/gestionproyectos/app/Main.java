@@ -2,8 +2,8 @@ package co.unicauca.microkernel.gestionproyectos.app;
 
 import co.unicauca.microkernel.gestionproyectos.core.domain.services.ProjectService;
 import co.unicauca.microkernel.gestionproyectos.core.plugin.manager.IProjectRepositoryPlugin;
-import co.unicauca.microkernel.gestionproyectos.access.ProjectsRepositoryArrayPlugin;
 import co.unicauca.microkernel.gestionproyectos.core.domain.entities.User;
+import co.unicauca.microkernel.gestionproyectos.core.plugin.manager.PluginFactory;
 import co.unicauca.microkernel.gestionproyectos.core.plugin.manager.PluginManager;
 
 /**
@@ -23,17 +23,21 @@ public class Main {
     public static void main(String[] args) {
         
         // Inicialización del repositorio de proyectos (pendiente crear la fábrica)
-        IProjectRepositoryPlugin repositorioProyectos = new ProjectsRepositoryArrayPlugin();
-        
-        // Registrar el plugin en el sistema
-        PluginManager.registerPlugin(repositorioProyectos);
-        
+        IProjectRepositoryPlugin repositorioProyectos;
+        try {
+            repositorioProyectos = PluginFactory.createPlugin("ProjectsRepositoryArrayPlugin");
+            // Registrar el plugin en el sistema
+            PluginManager.registerPlugin(repositorioProyectos);
+        } catch (Exception ex) {
+            System.out.println("p");
+        }
+
         // Crear instancia del servicio de proyectos
         ProjectService projectService = new ProjectService();
 
         // Crear usuarios
         User empresa = new User("TechCorp", "contacto@techcorp.com", "EMPRESA");
-        User estudiante = new User("Juan Pérez", "juan@example.com", "ESTUDIANTE");
+        User estudiante = new User("Juan Perez", "juan@example.com", "ESTUDIANTE");
 
         // Registrar un nuevo proyecto
         projectService.registerProject("Sistema de Inventarios", "Desarrollar un sistema de gestión de inventarios.", empresa);
@@ -46,7 +50,7 @@ public class Main {
         projectService.assignProject("Sistema de Inventarios", estudiante);
 
         // Listar proyectos nuevamente para reflejar los cambios
-        System.out.println("\nProyectos después de la asignación:");
+        System.out.println("\nProyectos despues de la asignacion:");
         projectService.listProject();
     }
 }

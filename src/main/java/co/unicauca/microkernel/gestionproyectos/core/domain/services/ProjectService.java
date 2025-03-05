@@ -67,6 +67,7 @@ public class ProjectService {
      * @param estudiante Usuario que representa al estudiante.
      */
     public void assignProject(String titulo, User estudiante) {
+        titulo = titulo.toUpperCase();
         Project proyecto = repositorio.findProjectByTitle(titulo);
         if (proyecto == null) {
             System.out.println("Proyecto no encontrado.");
